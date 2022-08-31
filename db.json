@@ -1,0 +1,11 @@
+{
+    "users": [
+      {
+        "username": "MonsterBasket",
+        "password": "UnsafePassword",
+        "recipes":{},
+        "todo": {},
+        "calendar":{}
+      }
+    ]
+  }
