@@ -1,6 +1,7 @@
 article{
   margin: 5px;
   border: solid 2px black;
+  border-radius: 10px;
   text-align: center;
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -13,9 +14,8 @@ article img{
   display: inline;
 }
 article h4{
-  margin: 0px;
+  margin: auto;
   display: inline;
-  line-height: 90px;
 }
 .recipeList{
   width: 100%;
@@ -41,16 +41,39 @@ article h4{
 .recipeMain h2{
   text-align: center;
 }
+.recipeMain h5{
+  text-align: center;
+  margin-top: -15px;
+}
 .ingredients{
   display: grid;
   grid-template-columns: 3fr 2fr;
+  align-items: center;
+}
+.nutrition{
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.nutritionButton{
+  position: absolute;
+  right: 10px;
+}
+.ingredients div{
+  height: 100%;
+}
+.ingredients div div{
+  display: grid;
 }
 .ingredients img{
   max-width: 100%;
   max-height: 100%;
-  margin: auto;
+  margin-top: 10px;
   display: inline;
   vertical-align: middle;
+  align-self: center;
+}
+.nutritionButton{
+  align-self: center;
 }
 .hidden{
   transform: scale(0);
@@ -66,8 +89,11 @@ article h4{
   width: 100%
 }
 footer{
-  position: absolute;
   width: 100%;
   text-align: center;
-  bottom:10px;
+}
+@media only screen and (max-width: 600px){
+  .recipeList{
+    grid-template-columns: 1fr;
+  }
 }
