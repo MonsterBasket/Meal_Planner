@@ -1,0 +1,28 @@
+.light{
+    background-color: white;
+    color: black;
+    transition: all 0.3s;
+}
+.dark{
+    background-color: black;
+    color: whitesmoke;
+    transition: all 0.3s;
+}
+.login{
+    text-align: center;
+}
+.login div{
+    width: 250px;
+    margin: auto;
+}
+.login button, .login input{
+    width: 100%;
+    margin: auto;
+    box-sizing: border-box;
+}
+.login span{
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    color: red;
+}
