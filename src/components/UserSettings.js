@@ -1,23 +1,31 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../context/user";
 import "../css/settings.css";
 
 function UserSettings() {
-    const [theme, setTheme] = useState("")
+    const {user, setUser} = useContext(UserContext);
 
-    useEffect(_ => {
-        if (theme){
-        document.body.className = theme;
-        }
-    }, [theme])
 
     function darkMode(e){
-        setTheme(e.target.checked ? "dark" : "light")
+        let newTheme = e.target.checked ? "dark" : "light"
+        setUser({...user, theme:newTheme})
     }
+
+    function save(){
+        fetch(`http://localhost:4000/users/${user.id}`,{
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(user)
+        })
+    }
+
     return <div>
         <h2>User Settings Page</h2>
         <div>
-            Dark Mode: <label className="switch"><input type="checkbox" onChange={darkMode}/><span className="slider"/></label>
-
+            Dark Mode: <label className="switch"><input type="checkbox" onChange={darkMode} checked={user.theme === "dark"}/><span className="slider"/></label>
+            <button onClick={save}>Save</button>
         </div>
     </div>
 }

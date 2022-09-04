@@ -1,8 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { UserContext } from "../context/user";
 
 function RecipesList({searched}){
+    const {user, setUser} = useContext(UserContext);
     const [recipes, setRecipes] = useState([]);
-    const [expandedRecipes, setExpandedRecipe] = useState([]);
+    const [savedRecipes, setSavedRecipes] = useState([])
+    const [expandedRecipes, setExpandedRecipes] = useState([]);
     const [target, setTarget] = useState("");
     const [nutrition, setNutrition] = useState(false);
     const inMyRecipes = useRef(false);
@@ -12,14 +15,18 @@ function RecipesList({searched}){
     }, [])
 
     function init(){
-        if (searched === undefined){
-            fetch('http://localhost:4000/recipes?userId=1')
+            fetch(`http://localhost:4000/recipes?userId=${user.id}`)
             .then(res => res.json())
-            .then(json => {setRecipes(json); setExpandedRecipe(json)})    
-        }
-        else {
-            setRecipes(searched);
-        }
+            .then(json => {
+                setExpandedRecipes(json); //prevents requesting information we already have - this will store any recipe we've expanded
+                setSavedRecipes(json); //used for checking if searched recipes are already saved - this stores only recipes we've saved
+                if (searched === undefined){ 
+                    setRecipes(json); //display user saved recipes for /myrecipes only
+                }
+                else {
+                    setRecipes(searched); //this component is called by recipeSearch only when searched contains search results
+                }
+            })
     }
 
     function expandRecipe(id){
@@ -27,21 +34,18 @@ function RecipesList({searched}){
             setTarget(expandedRecipes.length);
             fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=7778fad0590b4ea1810a333175b1e8cf&includeNutrition=false`)
             .then(res => res.json())
-            .then(json => {
-                setExpandedRecipe([...expandedRecipes, json]);
-                inMyRecipes.current = false;
-            })
+            .then(json => setExpandedRecipes([...expandedRecipes, json]))
+            .catch(err => console.log(err))
         }
         else{
             let index = expandedRecipes.findIndex(a => a.id === Number(id));
             setTarget(index)
-            inMyRecipes.current = true;
         }
     }
 
     function save(){
         let addRecipe = {...expandedRecipes[target]};
-        addRecipe.userId = 1;
+        addRecipe.userId = user.id;
         fetch(`http://localhost:4000/recipes/`, {
             method: "POST",
             headers: {
@@ -51,29 +55,32 @@ function RecipesList({searched}){
             body: JSON.stringify(addRecipe)
         })
             .then(res => res.json())
-            .then(json => inMyRecipes.current = true)
-            .catch(err => console.log(JSON.stringify(err), JSON.stringify(err.message)));
+            .then(json => setSavedRecipes([...savedRecipes, addRecipe]))
+            .catch(err => {console.log(JSON.stringify(err)); console.log(JSON.stringify(err.message))});
     }    
 
     function deleteRecipe(){
-        fetch(`http://localhost:4000/recipes/${expandedRecipes[target].id}?userId=1`, {method: "DELETE"})
-        setExpandedRecipe(expandedRecipes.filter(a => a.id !== expandedRecipes[target].id));
-        setRecipes(recipes.filter(a => a.id !== expandedRecipes[target].id))
+        fetch(`http://localhost:4000/recipes/${expandedRecipes[target].id}?userId=${user.id}`, {method: "DELETE"})
+        // setExpandedRecipe(expandedRecipes.filter(a => a.id !== expandedRecipes[target].id));
+        if (window.location.pathname === "/myrecipes"){
+            setRecipes(recipes.filter(a => a.id !== expandedRecipes[target].id))
+        }
         setTarget("");
+        inMyRecipes.current = false;
     }
 
     return <div>
-        <section className="recipeList">
-            {recipes.map(a => <article key={a.id} id={a.id} onClick={e => expandRecipe(e.target.id || e.target.parentNode.id)}>
+        <section className="recipeList"> {/* Lays out the initial list of recipes, in /recipesearch it's the search results, in /myrecipes it's the saved recipes */}
+            {recipes.map(a => <article key={a.id} id={a.id} className={`listItem ${user.theme}`}onClick={e => expandRecipe(e.target.id || e.target.parentNode.id)}>
                 <img src={a.image}></img>
-                <h4>{a.title}</h4>
+                <h4>{savedRecipes.findIndex(b => b.id === a.id) >= 0 ? "⭐": null}{a.title}</h4>
             </article>)}
         </section>
-        <section className={`recipeMain ${target !== "" ? "visible" : "hidden"}`}>
+        <section className={`recipeMain ${user.theme} ${target !== "" ? "visible" : "hidden"}`}> {/* When a recipe from the list is clicked, this will show all details in full-screen */}
             {expandedRecipes[target] === undefined ? <div>Loading...</div> : 
             <div>
                 <button className="recipeBackButton" onClick={_ => setTarget("")}>Back</button>
-                <h2>{expandedRecipes[target].title}</h2>
+                <h2>{savedRecipes.findIndex(b => b.id === expandedRecipes[target].id) >= 0 ? "⭐": null}{expandedRecipes[target].title}</h2>
                 <h5>👍 {expandedRecipes[target].aggregateLikes} - Time: {expandedRecipes[target].readyInMinutes}mins - Serves: {expandedRecipes[target].servings}</h5>
                 <div className={nutrition ? "nutrition" : "ingredients"}>
                     {nutrition ? null :
@@ -113,7 +120,7 @@ function RecipesList({searched}){
                         {expandedRecipes[target].analyzedInstructions[0].steps.map(item => <li key={item.number}>{item.step}</li>)}
                     </ol>
                     <footer>
-                        {inMyRecipes.current ? <button onClick={deleteRecipe}>Remove from My Recipes</button> : <button onClick={save}>Add to My Recipes</button>}
+                        {savedRecipes.findIndex(b => b.id === expandedRecipes[target].id) >= 0 ? <button onClick={deleteRecipe}>Remove from My Recipes</button> : <button onClick={save}>Add to My Recipes</button>}
                     </footer>
                 </div>
             </div>}

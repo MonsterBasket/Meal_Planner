@@ -11,9 +11,8 @@ function RecipeSearch(){
         setRecipes([]); //this is the only way I can find to make it re-render.
         fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=7778fad0590b4ea1810a333175b1e8cf&query=${searchTerm}`)
             .then(res => res.json())
-            .then(json => {
-                setRecipes(json.results)
-            })
+            .then(json => setRecipes(json.results))
+            .catch(err => console.log(err))
     }
 
     return <div><h2>Recipe Search Page</h2>
