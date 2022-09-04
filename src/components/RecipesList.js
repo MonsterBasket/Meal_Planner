@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/user";
 
-function RecipesList({searched}){
+function RecipesList({searched, setMeal}){
     const {user} = useContext(UserContext);
     const [recipes, setRecipes] = useState([]);
     const [savedRecipes, setSavedRecipes] = useState([])
@@ -28,7 +28,8 @@ function RecipesList({searched}){
             })
     }
 
-    function expandRecipe(id){
+    function expandRecipe(e, id){
+        e.stopPropagation();
         if (expandedRecipes.findIndex(a => a.id === Number(id)) === -1){ 
             setTarget(expandedRecipes.length);
             fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=7778fad0590b4ea1810a333175b1e8cf&includeNutrition=false`)
@@ -61,15 +62,15 @@ function RecipesList({searched}){
     function deleteRecipe(){
         fetch(`http://localhost:4000/recipes/${expandedRecipes[target].id}?userId=${user.id}`, {method: "DELETE"})
         // setExpandedRecipe(expandedRecipes.filter(a => a.id !== expandedRecipes[target].id));
-        if (window.location.pathname === "/myrecipes"){
+        if (window.location.pathname !== "/recipesearch"){
             setRecipes(recipes.filter(a => a.id !== expandedRecipes[target].id))
         }
         setTarget("");
     }
 
-    return <div>
+    return <div onClick={e=> e.stopPropagation()}>
         <section className="recipeList"> {/* Lays out the initial list of recipes, in /recipesearch it's the search results, in /myrecipes it's the saved recipes */}
-            {recipes.map(a => <article key={a.id} id={a.id} className={`listItem ${user.theme}`}onClick={e => expandRecipe(e.target.id || e.target.parentNode.id)}>
+            {recipes.map(a => <article key={a.id} id={a.id} className={`listItem ${user.theme}`}onClick={e => expandRecipe(e, e.target.id || e.target.parentNode.id)}>
                 <img src={a.image}></img>
                 <h4>{savedRecipes.findIndex(b => b.id === a.id) >= 0 ? "⭐": null}{a.title}</h4>
             </article>)}
@@ -80,6 +81,7 @@ function RecipesList({searched}){
                 <button className="recipeBackButton" onClick={_ => setTarget("")}>Back</button>
                 <h2>{savedRecipes.findIndex(b => b.id === expandedRecipes[target].id) >= 0 ? "⭐": null}{expandedRecipes[target].title}</h2>
                 <h5>👍 {expandedRecipes[target].aggregateLikes} - Time: {expandedRecipes[target].readyInMinutes}mins - Serves: {expandedRecipes[target].servings}</h5>
+                {window.location.pathname === "/calendar" || window.location.pathname === "/todo" ? <h5><button onClick={_ => setMeal(expandedRecipes[target].id, expandedRecipes[target].title, expandedRecipes[target].image)}>Use This Meal</button></h5> : null}
                 <div className={nutrition ? "nutrition" : "ingredients"}>
                     {nutrition ? null :
                     <div>

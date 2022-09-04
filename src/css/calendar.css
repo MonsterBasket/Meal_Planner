@@ -1,11 +1,16 @@
 .calendar{
     display: grid;
     grid-template-columns: repeat(7,1fr);
+    grid-template-rows: auto;
     gap: 2px;
 }
 .calendar div{
-    height: 50px;
+    min-height: 50px;
     position: relative;
+    overflow: hidden;
+}
+.calendar div div{
+    min-height: auto;
 }
 .monthHeader{
     width: 165px;
@@ -44,7 +49,7 @@
 }
 .calendar .dayHeaders{
     text-align: center;
-    height: 2em;
+    min-height: 2em;
     line-height: 2em;
 }
 .dayHeaders h4{
@@ -59,9 +64,21 @@
 }
 .dark .dateCover{
     background-color: rgb(92, 14, 14, 0);
+    border: solid 2px rgb(145, 51, 51, 0);
+    transition: border 0.2s;
+}
+.dark .dateCover:hover{
+    border: solid 2px rgb(145, 51, 51);
+    transition: border 0.2s;
 }
 .light .dateCover{
     background-color: rgb(88, 139, 88, 0);
+    border: solid 2px rgb(29, 95, 29, 0);
+    transition: border 0.2s;
+}
+.light .dateCover:hover{
+    border: solid 2px rgb(29, 95, 29);
+    transition: border 0.2s;
 }
 .dateCover.expandedDate{
     position: fixed;
@@ -98,13 +115,41 @@
     width: 150px;
     left: calc(50% - 75px)
 }
-.tasks{
+.dateCover .tasks{
     top: -1.1em;
-}
-.dateCover:first-child div{
     left: 1.1em;
-    right: 0px;
-    width: calc(100% - 1.1em);
+    height: auto;
+    width: fit-content;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 1px;
+    padding: 0 2px 0 2px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.dateCover .tasks.meal{
+    background-color: rgba(0, 0, 255, 0.545);
+}
+.dateCover.expandedDate .tasks{
+    width: auto;
+}
+.dateCover .tasks ~ div{
+    left: 0px;
+    height: auto;
+}
+.taskDescription, .taskMeal{
+    display: none;
+    white-space: pre-wrap;
+}
+.dateCover.expandedDate .tasks .taskDescription, .dateCover.expandedDate .tasks .taskMeal{ /*specificity is fucking killing me right now*/
+    left: 1em;
+    height: auto;
+    display: block;
+}
+.taskMeal img{
+    max-width: 100px;
+}
+.dateCover.expandedDate div{
+    margin-bottom: 15px;
 }
 .dateCover.expandedDate:first-child div{
     left:auto;
