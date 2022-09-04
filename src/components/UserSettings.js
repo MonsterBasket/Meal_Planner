@@ -24,7 +24,8 @@ function UserSettings() {
     return <div>
         <h2>User Settings Page</h2>
         <div>
-            Dark Mode: <label className="switch"><input type="checkbox" onChange={darkMode} checked={user.theme === "dark"}/><span className="slider"/></label>
+            Dark Mode: <label className="switch"><input type="checkbox" onChange={darkMode} checked={user.theme === "dark"}/><span className="slider"/></label><br></br><br></br>
+            That's the only setting you get lol<br></br>
             <button onClick={save}>Save</button>
         </div>
     </div>

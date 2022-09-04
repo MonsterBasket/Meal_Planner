@@ -1,11 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../context/user";
 import getTasks from "./getTasks";
+import printTasks from "./printTasks";
 import NewTask from "./NewTask";
 import "../css/calendar.css";
 
 function Calendar(){
-    const {user, setUser} = useContext(UserContext);
+    const {user} = useContext(UserContext);
     const [tasks, setTasks] = useState([]);
     const [dates, setDates] = useState(null);
     const [newMonth, changeMonth] = useState(0);
@@ -56,17 +57,6 @@ function Calendar(){
             : e.target.parentNode.parentNode.classList.remove("expandedDate");
     }
 
-    function printTasks(id){
-        return tasks.length === 0 ? null : tasks.filter(a => a.date === id).map(a => 
-            <div key={a.id} className={`tasks ${a.isMeal ? "meal" : ""}`} >
-                {a.name}
-                {a.isMeal ? <div className="taskMeal"><img src={a.mealImg}></img> {a.mealName}</div> : null}
-                {a.description ? <div className="taskDescription">{a.description}</div> : null}
-            </div>)
-        //when I extracted this into a function I thought it would be longer.  Still long enough to keep here though I think rather than doing inline.
-        //Also interesting example/practice that it's possible to do this way.
-    }
-
     function addTask(id){
         //this just displays and sets up the props for <NewTask>
         setNewTaskDate(id); //need to clear newTaskDate back to "" to close the window
@@ -82,7 +72,7 @@ function Calendar(){
                         <div key={a} className={`${a.toString() === dates.today.toString() ? "today" : a.getMonth() === dates.thisMonth ? "currentMonth" : "otherMonth"}`}>
                             <div className="dateCover" onClick={(e => expandDate(e, a.toLocaleDateString("en-AU")))}>
                                 {a.getDate()}
-                                {printTasks(a.toLocaleDateString("en-AU"))}
+                                {printTasks(tasks, setTasks, a.toLocaleDateString("en-AU"))}
                                 <button className="calendarBack" onClick={contractDate}>back</button>
                                 <button className="calendarAdd" onClick={_ => addTask(a.toLocaleDateString("en-AU"))}>New Task</button>
                             </div>

@@ -6427,38 +6427,24 @@
       "id": 1,
       "date": "04/09/2022",
       "userId": 1,
-      "name": "Test task"
-    },
-    {
-      "userId": 1,
-      "date": "14/01/2022",
-      "id": 2
-    },
-    {
-      "userId": 1,
-      "date": "28/01/2022",
-      "id": 3
+      "name": "Test task",
+      "complete": false
     },
     {
       "name": "Do things",
       "description": "This is a longer description",
       "userId": 1,
       "date": "05/09/2022",
-      "id": 4
-    },
-    {
-      "name": "Do more things",
-      "description": "This is a longer description",
-      "userId": 1,
-      "date": "09/09/2022",
-      "id": 5
+      "id": 4,
+      "complete": false
     },
     {
       "name": "Two tasks on one day!",
       "description": "This is a longer description",
       "userId": 1,
       "date": "09/09/2022",
-      "id": 6
+      "id": 6,
+      "complete": false
     },
     {
       "name": "Lunch",
@@ -6476,7 +6462,8 @@
       "description": "multi\nline\ncomments\nare\ngreat",
       "userId": 1,
       "date": "09/09/2022",
-      "id": 8
+      "id": 8,
+      "complete": false
     },
     {
       "name": "Lunch",
@@ -6489,17 +6476,6 @@
       "id": 9
     },
     {
-      "name": "Lunch",
-      "isMeal": true,
-      "mealId": 638086,
-      "mealName": "Chicken Fingers",
-      "mealImg": "https://spoonacular.com/recipeImages/638086-556x370.jpg",
-      "description": "",
-      "userId": 1,
-      "date": "07/09/2022",
-      "id": 10
-    },
-    {
       "name": "Dinner",
       "isMeal": true,
       "mealId": 642371,
@@ -6509,6 +6485,39 @@
       "userId": 1,
       "date": "07/09/2022",
       "id": 11
+    },
+    {
+      "name": "Something",
+      "isMeal": false,
+      "mealId": "",
+      "mealName": "",
+      "mealImg": "",
+      "description": "",
+      "date": "",
+      "id": 12
+    },
+    {
+      "name": "Something",
+      "isMeal": false,
+      "mealId": "",
+      "mealName": "",
+      "mealImg": "",
+      "description": "",
+      "userId": 1,
+      "date": "",
+      "id": 13,
+      "complete": true
+    },
+    {
+      "name": "Breakfast",
+      "isMeal": true,
+      "mealId": 637999,
+      "mealName": "Chicken Burritos",
+      "mealImg": "https://spoonacular.com/recipeImages/637999-556x370.jpg",
+      "description": "I know it's crazy, but breakfast chicken burritos are the best!\n\nTHE.\n\nBEST!",
+      "userId": 1,
+      "date": "07/09/2022",
+      "id": 14
     }
   ]
 }

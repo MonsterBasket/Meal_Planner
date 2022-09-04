@@ -43,11 +43,27 @@ function NewTask({date, setNewTaskDate, tasks, setTasks, userId}){
         const days = e.target.value.slice(8);
         const month = e.target.value.slice(5, 7);
         const year = e.target.value.slice(0,4);
-        setTask({...task, date:e.target.value, exportDate:`${days}-${month}-${year}`})
+        setTask({...task, date:e.target.value, exportDate:`${days}/${month}/${year}`})
+    }
+
+    function enterConfirm(e){
+        if(e.keyCode === 13){
+            if (!task.name){
+                alert("Please enter a name!");
+                return
+            }    
+            if(window.confirm("Are you sure you want to save?")){
+            save(e);
+            }
+        }
     }
 
     function save(e){
         e.preventDefault();
+        if (!task.name){
+            alert("Please enter a name!");
+            return
+        }
         let newTask = {
             name:task.name,
             isMeal:showMeal,
@@ -68,7 +84,7 @@ function NewTask({date, setNewTaskDate, tasks, setTasks, userId}){
         })
             .then(res => res.json())
             .then(json => {
-                setTasks([...tasks, newTask]) //this is setTasks from calendar component, NOT setTask from this component
+                setTasks([...tasks, newTask]) //this is setTasks from calendar or todo component, NOT setTask from this component
                 setNewTaskDate("")
                 setTask({name:"",
                 isMeal:false,
@@ -85,7 +101,7 @@ function NewTask({date, setNewTaskDate, tasks, setTasks, userId}){
     return <form>
         {mealList? <div onClick={_=>setMealList(false)}className="newTaskRecipeList"><RecipesList setMeal={setMeal}/><button className="newTaskRecipeBackButton" onClick={_=>setMealList(false)}>back</button></div> : null}
         <label>Task Name:<br></br>
-            <input type="text" name="name" id="nameInput" onChange={handleChange} onSubmit={e => e.preventDefault} value={task.name}></input><br></br>
+            <input type="text" name="name" id="nameInput" onChange={handleChange} onKeyDown={enterConfirm} onSubmit={e => e.preventDefault} value={task.name}></input><br></br>
             <button onClick={setMealName}>Breakfast</button><button onClick={setMealName}>Lunch</button><button onClick={setMealName}>Dinner</button><button onClick={setMealName}>Snack</button>
         </label><br></br><br></br>
         {showMeal ? <><button onClick={(showMeals)}>Choose Meal</button>{task.mealName ? <span><img className="newTaskImg" src={task.mealImg}></img> {task.mealName}</span> : null}<br></br><br></br></> : <><br></br><br></br></>}

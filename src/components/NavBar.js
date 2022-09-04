@@ -20,6 +20,7 @@ function NavBar(){
         <div className="navLeft">
             <NavLink to="/">Home</NavLink><span> - </span>
             <NavLink to="/myrecipes">My Recipes</NavLink><span> - </span>
+            <NavLink to="/todo">To-Do</NavLink><span> - </span>
             <NavLink to="/calendar">Calendar</NavLink>
         </div>
         <div className="navRight">

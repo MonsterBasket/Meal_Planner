@@ -143,7 +143,7 @@
 .dateCover.expandedDate .tasks .taskDescription, .dateCover.expandedDate .tasks .taskMeal{ /*specificity is fucking killing me right now*/
     left: 1em;
     height: auto;
-    display: block;
+    display: flex;
 }
 .taskMeal img{
     max-width: 100px;
@@ -154,4 +154,12 @@
 .dateCover.expandedDate:first-child div{
     left:auto;
     top: 0.4em;
+}
+.expandedDate .deleteButton{
+    right: 25px;
+    top: 0px;
+}
+.expandedDate .completeButton{
+    right: 0px;
+    top: 0px;
 }

@@ -5,6 +5,7 @@ import Home from "./Home";
 import MyRecipes from "./MyRecipes";
 import RecipeSearch from "./RecipeSearch";
 import Calendar from "./Calendar";
+import ToDoList from "./ToDoList";
 import UserSettings from "./UserSettings";
 import Landing from "./Landing";
 import { useContext } from "react";
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/myrecipes" element={<MyRecipes />} />
                     <Route path="/recipesearch" element={<RecipeSearch />} />
                     <Route path="/calendar" element={<Calendar />} />
+                    <Route path="/todo" element={<ToDoList />} />
                     <Route path="/usersettings" element={<UserSettings />} />
             </Routes>
         </>}

@@ -8,6 +8,16 @@
     color: whitesmoke;
     transition: all 0.3s;
 }
+a{
+    text-decoration: none;
+}
+.dark a{
+    color:whitesmoke
+}
+/* a:link - a normal, unvisited link
+a:visited - a link the user has visited
+a:hover - a link when the user mouses over it
+a:active */
 .login{
     text-align: center;
 }
@@ -84,4 +94,29 @@ nav{
 .newTaskImg{
     max-width: 40px;
     align-self: center;
+}
+.todo{
+    display: grid;
+    grid-template-columns: 45px 1fr 20px 20px;
+}
+.todo.meal{
+    display: grid;
+    grid-template-columns: 45px 70px 1fr 20px 20px;
+}
+.tasks{
+    margin: 2px;
+    border: solid 1px lightgray;
+}
+.todo .taskMeal{
+    display: flex;
+    flex-wrap: nowrap;
+}
+.complete{
+    text-decoration: line-through;
+    background-color: rgb(144, 171, 238);
+}
+.deleteButton, .completeButton{
+    border: none;
+    background: transparent;
+    cursor: pointer;
 }
