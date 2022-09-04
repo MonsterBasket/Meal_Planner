@@ -1,0 +1,112 @@
+.calendar{
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    gap: 2px;
+}
+.calendar div{
+    height: 50px;
+    position: relative;
+}
+.monthHeader{
+    width: 165px;
+    display: flex;
+    justify-content: space-between;
+}
+.monthHeader div{
+    display: inline;
+}
+.monthHeader a{
+    cursor: pointer;
+}
+.light .currentMonth{
+    background-color: darkseagreen;
+}
+.light .otherMonth{
+    background-color: rgb(199, 226, 199);
+}
+.light .today{
+    background-color: rgb(88, 139, 88);
+}
+.light .dayHeaders{
+    background-color: rgb(174, 207, 174);
+}
+.dark .currentMonth{
+    background-color: rgb(45, 2, 2);
+}
+.dark .otherMonth{
+    background-color: rgb(28, 1, 1);
+}
+.dark .today{
+    background-color: rgb(92, 14, 14);
+}
+.dark .dayHeaders{
+    background-color: rgb(67, 6, 6);
+}
+.calendar .dayHeaders{
+    text-align: center;
+    height: 2em;
+    line-height: 2em;
+}
+.dayHeaders h4{
+    margin: 0;
+}
+.dateCover{
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    padding: 0 0 0 3px;
+    box-sizing: border-box;
+}
+.dark .dateCover{
+    background-color: rgb(92, 14, 14, 0);
+}
+.light .dateCover{
+    background-color: rgb(88, 139, 88, 0);
+}
+.dateCover.expandedDate{
+    position: fixed;
+    left: 1vw;
+    top: 1vh;
+    width: 98vw;
+    height: 98vh;
+    z-index: 2;
+    border-radius: 10px;
+    padding: 10px;
+}
+.dark .dateCover.expandedDate{
+    background-color: rgb(92, 14, 14, 1);
+    transition: background-color 0.7s;
+}
+.light .dateCover.expandedDate{
+    background-color: rgb(88, 139, 88, 1);
+    transition: background-color 0.7s;
+}
+.dateCover button{
+    display: none;
+}
+.dateCover.expandedDate button{
+    display:block;
+    position: absolute;
+}
+.calendarBack{
+    top: 10px;
+    right: 10px;
+}
+.calendarAdd{
+    font-size: 1.5em;
+    bottom: 1vh;
+    width: 150px;
+    left: calc(50% - 75px)
+}
+.tasks{
+    top: -1.1em;
+}
+.dateCover:first-child div{
+    left: 1.1em;
+    right: 0px;
+    width: calc(100% - 1.1em);
+}
+.dateCover.expandedDate:first-child div{
+    left:auto;
+    top: 0.4em;
+}

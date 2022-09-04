@@ -1,14 +1,13 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/user";
 
 function RecipesList({searched}){
-    const {user, setUser} = useContext(UserContext);
+    const {user} = useContext(UserContext);
     const [recipes, setRecipes] = useState([]);
     const [savedRecipes, setSavedRecipes] = useState([])
     const [expandedRecipes, setExpandedRecipes] = useState([]);
     const [target, setTarget] = useState("");
     const [nutrition, setNutrition] = useState(false);
-    const inMyRecipes = useRef(false);
 
     useEffect(() => {
         init()
@@ -66,7 +65,6 @@ function RecipesList({searched}){
             setRecipes(recipes.filter(a => a.id !== expandedRecipes[target].id))
         }
         setTarget("");
-        inMyRecipes.current = false;
     }
 
     return <div>
