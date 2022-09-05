@@ -163,3 +163,9 @@
     right: 0px;
     top: 0px;
 }
+.dateCoverMonthYear{
+    display:none;
+}
+.expandedDate .dateCoverMonthYear{
+    display: inline;
+}

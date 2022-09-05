@@ -71,7 +71,7 @@ function Calendar(){
                     {dates.days.map(a => 
                         <div key={a} className={`${a.toString() === dates.today.toString() ? "today" : a.getMonth() === dates.thisMonth ? "currentMonth" : "otherMonth"}`}>
                             <div className="dateCover" onClick={(e => expandDate(e, a.toLocaleDateString("en-AU")))}>
-                                {a.getDate()}
+                                {a.getDate()} <span className="dateCoverMonthYear">{a.toString().slice(4,7)} {a.toString().slice(11,15)}</span>
                                 {printTasks(tasks, setTasks, a.toLocaleDateString("en-AU"))}
                                 <button className="calendarBack" onClick={contractDate}>back</button>
                                 <button className="calendarAdd" onClick={_ => addTask(a.toLocaleDateString("en-AU"))}>New Task</button>
