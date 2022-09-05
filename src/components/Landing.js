@@ -96,7 +96,7 @@ function Landing(){
 
     function login(username = form.username, password=form.password){
         setForm({...form, loginError:""})
-        if(form.username && form.password){
+        if(username && password){
             fetch(`http://localhost:4000/users?username=${username}&password=${password}`)
                 .then(res => res.json())
                 .then(json => {const myObj = json[0]; setUser(myObj)})
@@ -126,7 +126,7 @@ function Landing(){
                 })
             })
                 .then(res => res.json())
-                .then(json => login(form.fName, form.password1))
+                .then(json => login(form.newUsername, form.password1))
                 .catch(err => console.log(JSON.stringify(err), JSON.stringify(err.message)));
         }
         else {
@@ -153,7 +153,7 @@ function Landing(){
             <input type="text" name="lName" placeholder="Last Name" onChange={handleChange} value={form.lName}></input><br></br><br></br>
             <input type="password" name="password1" placeholder="Password" onChange={handleChange} value={form.password1}></input><br></br>
             <span>{form.password1Error}</span><br></br>
-            <input type="password" name="password2" placeholder="Repeat Password" onChange={handleChange} value={form.password2}></input><br></br>
+            <input type="password" name="password2" placeholder="Repeat Password" onChange={handleChange} onKeyDown={e => {if(e.keyCode === 13) signup()}} value={form.password2}></input><br></br>
             <span>{form.password2Error}</span><br></br>
             <button onClick={signup}>Sign-Up</button>
         </div>

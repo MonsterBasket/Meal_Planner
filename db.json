@@ -15,6 +15,13 @@
       "password": "a",
       "id": 2,
       "theme": "dark"
+    },
+    {
+      "fname": "tester",
+      "lname": "person",
+      "username": "test",
+      "password": "hello1",
+      "id": 3
     }
   ],
   "recipes": [
