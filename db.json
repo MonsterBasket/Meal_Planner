@@ -22,6 +22,28 @@
       "username": "test",
       "password": "hello1",
       "id": 3
+    },
+    {
+      "fname": "Demo Person",
+      "lname": "Hi",
+      "username": "Demo",
+      "password": "hello1",
+      "id": 4
+    },
+    {
+      "fname": "a",
+      "lname": "a",
+      "username": "test1",
+      "password": "hello1",
+      "id": 5
+    },
+    {
+      "fname": "a",
+      "lname": "a",
+      "username": "test2",
+      "password": "hello1",
+      "theme": "light",
+      "id": 6
     }
   ],
   "recipes": [

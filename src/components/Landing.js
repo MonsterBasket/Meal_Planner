@@ -122,7 +122,8 @@ function Landing(){
                 fname:form.fName,
                 lname:form.lName,
                 username:form.newUsername,
-                password:form.password1
+                password:form.password1,
+                theme:"light"
                 })
             })
                 .then(res => res.json())
